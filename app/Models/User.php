@@ -51,7 +51,8 @@ class User extends Authenticatable
      */
     public function getViews(): array {
         $views = [
-            ['view' => 'Reset Password', 'route' => 'resources']
+            ['view' => 'Dashboard', 'route' => 'home'],
+            ['view' => 'Book Resources', 'route' => 'resources']
         ];
         return $views;
     }
