@@ -45,4 +45,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * @return array
+     */
+    public function getViews(): array {
+        $views = [
+            ['view' => 'Reset Password', 'route' => 'resources']
+        ];
+        return $views;
+    }
 }
