@@ -3,9 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -52,8 +54,22 @@ class User extends Authenticatable
     public function getViews(): array {
         $views = [
             ['view' => 'Dashboard', 'route' => 'home'],
-            ['view' => 'Book Resources', 'route' => 'resources']
         ];
         return $views;
     }
+
+    /**
+     * @return array
+     */
+
+    public function getViewsFromDatabase(): array {
+        try {
+        $results = DB::table('master_views')->select('ViewName','ViewRoute')->get();
+        $views = $results -> map(function ($view) {return['view'=>$view->ViewName,'route'=>$view->ViewRoute];})->toarray();
+        return $views;
+        } catch (\Exception $e) {
+        return [];
+        }
+    }
+
 }

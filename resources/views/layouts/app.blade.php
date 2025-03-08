@@ -63,6 +63,14 @@
                                     </a>
                                     @endforeach
 
+                                    {{--Loop through the views the user has access to by getting it from the database (Table Name : master_views Columns : "ViewName""ViewRoute")--}}
+                                    {{--Added by Nuski on 8th March--}}
+                                    @foreach (Auth::user()->getViewsFromDatabase() as $view)
+                                    <a class="dropdown-item" href="{{route($view['route'])}}">
+                                    {{$view['view']}}
+                                    </a>
+                                    @endforeach
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">
