@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Campus App</title>
-    @vite('resources/css/homepage.css')
+    @vite('resources/css/dashboardpage.css')
 </head>
 <body>
     <header>
