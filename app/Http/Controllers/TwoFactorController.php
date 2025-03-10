@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class TwoFactorController extends Controller
 {
@@ -33,6 +34,6 @@ class TwoFactorController extends Controller
             return redirect()->intended('/dashboard');
     }
 
-    return redirect()->route('two_factor.index')->withErrors(['code'=> 'The provided code is Incorrect.' ]);
+    return redirect()->route('two-factor.index')->withErrors(['code'=> 'The provided code is Incorrect.' ]);
     }
 }
