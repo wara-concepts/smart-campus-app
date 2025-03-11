@@ -28,7 +28,7 @@ return new class extends Migration
         Schema::create('class_rooms', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->foreignId('department_id');
-            $table->int('capacity');
+            $table->integer('capacity');
             $table->timestamps();
         });
 
@@ -36,7 +36,7 @@ return new class extends Migration
             $table->string('id')->primary();
             $table->foreignId('department_id');
             $table->string('name');
-            $table->int('qty');
+            $table->integer('qty');
             $table->timestamps();
         });
 
@@ -47,7 +47,7 @@ return new class extends Migration
             $table->dateTime('request_dateTime', precision: 0);
             $table->dateTime('handover_dateTime', precision: 0);
             $table->string('status');
-            $table->int('qty');
+            $table->integer('qty');
             $table->timestamps();
         });
 
