@@ -43,8 +43,9 @@ class ResourceController extends Controller
     
             // Look up the department based on the provided department name
             $department = DB::table('departments')
-                            ->where('department', $validated['departmentSelect'])
-                            ->first();
+            ->where('department', $validated['departmentSelect'])
+            ->select('id')
+            ->first();
     
             if (!$department) {
                 return response()->json(['error' => 'Department not found'], 404);
