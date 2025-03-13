@@ -26,7 +26,7 @@ Route::middleware('auth', 'twofactor')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/resources',[ResourceController::class,'index'])->name('resources');
-    Route::post('/resources/store', [ResourceController::class,'store'])->name('resources.store');
+    Route::post('/resources', [ResourceController::class,'store'])->name('resources.store');
 });
 
 require __DIR__.'/auth.php';

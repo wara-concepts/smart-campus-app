@@ -13,20 +13,20 @@ return new class extends Migration
     {
         //departments
         Schema::create('departments', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->id()->primary();
             $table->string('department');
             $table->timestamps();
         });
 
         Schema::create('courses', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->id()->primary();
             $table->foreignId('department_id');
             $table->string('course');
             $table->timestamps();
         });
 
         Schema::create('class_rooms', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->id()->primary();
             $table->foreignId('department_id');
             $table->integer('capacity');
             $table->timestamps();
@@ -41,7 +41,7 @@ return new class extends Migration
         });
 
         Schema::create('resource_reserve', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->id()->primary();
             $table->foreignId('resource_id');
             $table->foreignId('user_id');
             $table->dateTime('request_dateTime', precision: 0);
@@ -52,7 +52,7 @@ return new class extends Migration
         });
 
         Schema::create('class_reserve', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->id()->primary();
             $table->foreignId('class_id');
             $table->foreignId('user_id');
             $table->dateTime('request_dateTime', precision: 0);
@@ -62,7 +62,7 @@ return new class extends Migration
         });
 
         Schema::create('events', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->id()->primary();
             $table->string('name');
             $table->foreignId('user_id');
             $table->dateTime('request_dateTime', precision: 0);
