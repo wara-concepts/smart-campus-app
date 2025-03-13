@@ -18,15 +18,33 @@
                             <label for="studentEmail">Email Address</label>
                             <input type="email" class="form-control" id="studentEmail" placeholder="{{Auth::User()->email}}" disabled="true">
                         </div>
+
+                        <div class="form-group">
+                            <label for="departmentSelect">Select Department</label>
+                            <select class="form-control" id="departmentSelect">
+                                @if(isset($departments))
+                                    @foreach ($departments as $department)
+                                        <option value="{{ $department }}">{{ $department }}</option>
+                                    @endforeach
+                                @else
+                                    <option value="exception" selected>Unable to get departments {{$th}}</option>
+                                @endif
+                            </select>
+                        </div>
+
                         <div class="form-group">
                             <label for="resourceSelect">Select Resource</label>
                             <select class="form-control" id="resourceSelect">
-                                <option value="studyRoom" selected>Study Room A</option>
-                                <option value="conferenceRoom">Conference Room B</option>
-                                <option value="computerLab">Computer Lab</option>
-                                <option value="gym">Campus Gym</option>
+                                @if (isset($resources))
+                                    @foreach ($resources as $resource)
+                                        <option value="{{$resource}}">{{$resource}}</option>                                        
+                                    @endforeach
+                                @else
+                                    <option value="exception" selected>Unable to get resources {{$th}}</option>
+                                @endif
                             </select>
                         </div>
+
                         <div class="form-group">
                             <label for="bookingDate">Booking Date</label>
                             <input type="date" class="form-control" id="bookingDate" value="2025-03-15">

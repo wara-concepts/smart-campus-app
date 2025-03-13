@@ -3,25 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\department;
-use App\Models\Resource;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreResourceRequest;
-use App\Http\Requests\UpdateResourceRequest;
+use App\Http\Requests\StoredepartmentRequest;
+use App\Http\Requests\UpdatedepartmentRequest;
 
-class ResourceController extends Controller
+class DepartmentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        try {
-            $departments = department::pluck("department");
-            $resources = Resource::pluck("name");
-            return view('resources',compact('departments','resources'));
-        } catch (\Throwable $th) {
-            return view('resources',compact('th'));
-        }
+        //
     }
 
     /**
@@ -35,7 +28,7 @@ class ResourceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreResourceRequest $request)
+    public function store(StoredepartmentRequest $request)
     {
         //
     }
@@ -43,7 +36,7 @@ class ResourceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Resource $resource)
+    public function show(department $department)
     {
         //
     }
@@ -51,7 +44,7 @@ class ResourceController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Resource $resource)
+    public function edit(department $department)
     {
         //
     }
@@ -59,7 +52,7 @@ class ResourceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateResourceRequest $request, Resource $resource)
+    public function update(UpdatedepartmentRequest $request, department $department)
     {
         //
     }
@@ -67,7 +60,7 @@ class ResourceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Resource $resource)
+    public function destroy(department $department)
     {
         //
     }
