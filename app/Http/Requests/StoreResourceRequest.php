@@ -11,7 +11,7 @@ class StoreResourceRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class StoreResourceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "resourceName" => "required|string|max:255",
+            "resourceQuantity" => "required|integer|max:10|min:1",
+            "departmentSelect" => "required|string|max:255"
         ];
     }
 }

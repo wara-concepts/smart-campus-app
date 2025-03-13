@@ -33,7 +33,7 @@ return new class extends Migration
         });
 
         Schema::create('resources', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->id()->primary();
             $table->foreignId('department_id');
             $table->string('name');
             $table->integer('qty');
