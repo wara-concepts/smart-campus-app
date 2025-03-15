@@ -5,6 +5,10 @@ use App\Http\Controllers\ResourcesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TwoFactorController;
 use App\Http\Controllers\ResourceController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\TimetableController;
+use App\Http\Controllers\ResultsController;
+use App\Http\Controllers\AnnouncementController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,7 +31,15 @@ Route::middleware('auth', 'twofactor')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/resources',[ResourceController::class,'index'])->name('resources');
     Route::post('/resources', [ResourceController::class,'store'])->name('resources.store');
+    Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcements');
+    Route::resource('courses', CourseController::class);
+    Route::get('/courses/create', [CourseController::class, 'create'])->name('courses.create');
 });
+
+// Academics Section
+Route::get('/courses', [CourseController::class, 'index'])->name('courses')->middleware('auth');
+Route::get('/timetable', [TimetableController::class, 'index'])->name('timetable')->middleware('auth');
+Route::get('/results', [ResultsController::class, 'index'])->name('results')->middleware('auth');
 
 require __DIR__.'/auth.php';
 
