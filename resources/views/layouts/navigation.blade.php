@@ -12,14 +12,36 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+
+
+                <!--Add Admin Navigation Links Here -->
+                @if(Auth::user()->usertype == 'admin') 
+
+                    <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                <!-- Resource Booking Page, Added by Nuski to Navigation Bar -->
+                    <!-- Resource Booking Page, Added by Nuski to Navigation Bar -->
                     <x-nav-link :href="route('resources')" :active="request()->routeIs('resources')">
                         {{ __('Campus Resources') }}
                     </x-nav-link>
+
+                    <!-- Resource Booking Page, Added by Nuski to Navigation Bar -->
+                    <x-nav-link :href="route('register.student.form')" :active="request()->routeIs('register.student.form')">
+                        {{ __('Register Students') }}
+                    </x-nav-link>
+                
+                <!--Add Lecyurer Navigation Links Here -->
+                @elseif(Auth::user()->usertype == 'lecturer')
+
+
+                <!--Add Student Navigation Links Here -->
+                @elseif(Auth::user()->usertype == 'student')
+
+                @endif
+                
+
+                
                 </div>
             </div>
 

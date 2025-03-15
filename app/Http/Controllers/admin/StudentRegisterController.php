@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Student;
+use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
@@ -13,18 +14,20 @@ class StudentRegisterController extends Controller
 {
     public function showStudentRegistrationForm()
     {
-        return view('admin.register-student');
+        $courses = Course::all(); // Fetch all courses
+        return view('admin.register-student', compact('courses'));
     }
 
     public function registerStudent(Request $request)
     {
+
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'fname' => 'required|string|max:191',
+            'email' => 'required|string|email|max:191|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'address' => 'required|string|max:255',
+            'address' => 'required|string|max:191',
             'dob' => 'required|date',
-            'course' => 'required|string|max:255',
+            'course' => 'required|string|max:191',
         ]);
 
         // Generate Student ID
@@ -68,4 +71,6 @@ class StudentRegisterController extends Controller
         return redirect()->route('student.dashboard')->with('success', "Student registered successfully! ID: {$studentID}");
     
     }
+
+
 }
