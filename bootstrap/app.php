@@ -3,6 +3,8 @@
 use Illuminate\Foundation\Application;
 use App\Http\Middleware\Verify2FAMiddleware;
 use App\Http\Middleware\studentMiddleware;
+use App\Http\Middleware\lecturerMiddleware;
+use App\Http\Middleware\adminMiddleware;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
@@ -16,6 +18,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->appendToGroup('twofactor', [ Verify2FAMiddleware::class, ]);
         $middleware->alias([
             'studentMiddleware' => studentMiddleware::class,
+            'lecturerMiddleware' => lecturerMiddleware::class,
+            'adminMiddleware' => adminMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
