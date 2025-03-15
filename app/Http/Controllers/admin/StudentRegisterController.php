@@ -23,9 +23,11 @@ class StudentRegisterController extends Controller
 
         $request->validate([
             'fname' => 'required|string|max:191',
+            'lname' => 'required|string|max:191',
             'email' => 'required|string|email|max:191|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+            'fullname' => 'required|string|max:191',
             'address' => 'required|string|max:191',
+            'nic' => 'required|string|max:191',
             'dob' => 'required|date',
             'course' => 'required|string|max:191',
         ]);
