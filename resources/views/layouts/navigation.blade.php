@@ -34,9 +34,6 @@
                         <x-dropdown-link :href="route('timetable')">
                             {{ __('Timetable') }}
                         </x-dropdown-link>
-                        <x-dropdown-link :href="route('results')">
-                            {{ __('Exam Results') }}
-                        </x-dropdown-link>
                     </x-slot>
                 </x-dropdown>
 

@@ -1,6 +1,3 @@
-@extends('layouts.app')
-
-@section('content')
 <div class="container">
     <h2>Create New Course</h2>
 
@@ -35,4 +32,4 @@
         <button type="submit" class="btn btn-primary">Create Course</button>
     </form>
 </div>
-@endsection
+
