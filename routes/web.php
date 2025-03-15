@@ -52,8 +52,9 @@ Route::middleware('auth','twofactor', 'lecturerMiddleware')->group(function () {
 
 Route::middleware('auth','twofactor', 'adminMiddleware')->group(function () {
     Route::get('/admin/dashboard', [adminController::class, 'index'])->name('admin.dashboard');
-    Route::get('/register-student', [StudentRegisterController::class, 'showStudentRegistrationForm'])->name('register.student.form');
+    Route::get('/admin/register-student', [StudentRegisterController::class, 'showStudentRegistrationForm'])->name('register.student.form');
     Route::post('/register-student', [StudentRegisterController::class, 'registerStudent'])->name('register.student');
+
 });
 =======
 // Academics Section

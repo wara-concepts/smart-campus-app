@@ -12,7 +12,7 @@
         <!-- Last Name -->
         <div>
             <x-input-label for="lname" :value="__('Last Name')" />
-            <x-text-input id="lname" class="block mt-1 w-full" type="text" name="lname" :value="old(';name')" required autofocus autocomplete="lname" />
+            <x-text-input id="lname" class="block mt-1 w-full" type="text" name="lname" :value="old(';lname')" required autofocus autocomplete="lname" />
             <x-input-error :messages="$errors->get('lname')" class="mt-2" />
         </div>
 
