@@ -1,58 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Campus App</title>
     @vite('resources/css/homepage.css')
+
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>Smart Campus App</h1>
-            <nav>
-                <ul>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#about">About Us</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-            <a class="login-btn" href="login">Login</a>
+  <!-- Header with Navbar -->
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="#">Smart Campus App</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="#features">Features</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#about">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">Contact</a>
+            </li>
+          </ul>
+          <ul class="mb-2 mb-lg-0">
+            <a class="btn btn-outline-primary" href="login">Login</a>
+            <a class="btn btn-outline-primary" href="register">Register</a>
+          </ul>
         </div>
-    </header>
+      </div>
+    </nav>
+  </header>
 
-    <main>
-        <section class="hero">
-            <div class="hero-content">
-                <h2>Welcome to the Smart Campus</h2>
-                <p>Your one-stop solution for all campus needs.</p>
-                <a class="cta-btn" href="login.html">Get Started</a>
-            </div>
-        </section>
+  <!-- Main Content -->
+  <main>
+    <!-- Hero Section -->
+    <section class="hero py-5 bg-light">
+      <div class="container text-center">
+        <h2 class="display-4">Welcome to the Smart Campus</h2>
+        <p class="lead">Your one-stop solution for all campus needs.</p>
+      </div>
+    </section>
 
-        <section id="features">
-            <h2>Features</h2>
-            <ul>
-                <li>Real-time Notifications</li>
-                <li>Campus Map and Navigation</li>
-                <li>Event Management</li>
-                <li>Course Management</li>
+    <!-- Features Section -->
+    <section id="features" class="py-5">
+      <div class="container">
+        <h2 class="mb-4">Features</h2>
+        <div class="row">
+          <div class="col-md-6">
+            <ul class="list-group">
+              <li class="list-group-item">Real-time Notifications</li>
+              <li class="list-group-item">Campus Map and Navigation</li>
+              <li class="list-group-item">Event Management</li>
+              <li class="list-group-item">Course Management</li>
             </ul>
-        </section>
-        
-        <section id="about">
-            <h2>About Us</h2>
-            <p>We aim to provide a seamless experience for students and faculty with our Smart Campus App. Discover more about our features and services.</p>
-        </section>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <section id="contact">
-            <h2>Contact Us</h2>
-            <p>If you have any questions, feel free to <a href="mailto:support@smartcampus.com">email us</a>.</p>
-        </section>
-    </main>
+    <!-- About Us Section -->
+    <section id="about" class="py-5 bg-light">
+      <div class="container">
+        <h2 class="mb-4">About Us</h2>
+        <p>We aim to provide a seamless experience for students and faculty with our Smart Campus App. Discover more about our features and services.</p>
+      </div>
+    </section>
 
-    <footer>
-        <p>&copy; 2023 Smart Campus App. All rights reserved.</p>
-    </footer>
+    <!-- Contact Section -->
+    <section id="contact" class="py-5">
+      <div class="container">
+        <h2 class="mb-4">Contact Us</h2>
+        <p>If you have any questions, feel free to <a href="mailto:support@smartcampus.com">email us</a>.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="py-3 bg-dark text-light">
+    <div class="container text-center">
+      <p class="mb-0">&copy; 2023 Smart Campus App | ESOFT Coursework, Software Development Practice | All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -4,11 +4,11 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ResourcesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TwoFactorController;
+use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\student\studentController;
 use App\Http\Controllers\lecturer\lecturerController;
 use App\Http\Controllers\admin\adminController;
 use App\Http\Controllers\admin\StudentRegisterController;
-
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,7 +28,8 @@ Route::middleware('auth', 'twofactor')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/resources',[ResourcesController::class,'index'])->name('resources');
+    Route::get('/resources',[ResourceController::class,'index'])->name('resources');
+    Route::post('/resources', [ResourceController::class,'store'])->name('resources.store');
 });
 
 Route::middleware('auth','twofactor', 'studentMiddleware')->group(function () {
