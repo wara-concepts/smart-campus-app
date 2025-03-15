@@ -10,6 +10,7 @@
                     </a>
                 </div>
 
+
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
 
@@ -19,7 +20,41 @@
 
                     <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
                         {{ __('Dashboard') }}
-                    </x-nav-link>
+                    </x-nav-link>\
+            <!-- Navigation Links -->
+            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                     {{ __('Dashboard') }}
+                </x-nav-link>
+
+                <!-- Academics Dropdown -->
+                <x-dropdown align="left" width="48">
+                    <x-slot name="trigger">
+                        <button class="inline-flex items-center px-3 py-6 text-gray-800 hover:text-gray-800 focus:outline-none">
+                            <span>Academics</span>
+                            <svg class="ms-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </x-slot>
+
+                    <x-slot name="content">
+                         <x-dropdown-link :href="route('courses')">
+                            {{ __('My Courses') }}
+                        </x-dropdown-link>
+                        <x-dropdown-link :href="route('timetable')">
+                            {{ __('Timetable') }}
+                        </x-dropdown-link>
+                        <x-dropdown-link :href="route('results')">
+                            {{ __('Exam Results') }}
+                        </x-dropdown-link>
+                    </x-slot>
+                </x-dropdown>
+
+                <x-nav-link :href="route('announcements')" :active="request()->routeIs('announcements')">
+                    {{ __('Announcements') }}
+                </x-nav-link>
+
 
                     <!-- Resource Booking Page, Added by Nuski to Navigation Bar -->
                     <x-nav-link :href="route('resources')" :active="request()->routeIs('resources')">
