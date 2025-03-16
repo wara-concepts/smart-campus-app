@@ -5,17 +5,16 @@ use App\Http\Controllers\ResourcesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TwoFactorController;
 use App\Http\Controllers\ResourceController;
-<<<<<<< Updated upstream
 use App\Http\Controllers\student\studentController;
 use App\Http\Controllers\lecturer\lecturerController;
 use App\Http\Controllers\admin\adminController;
 use App\Http\Controllers\admin\StudentRegisterController;
-=======
+use App\Http\Controllers\admin\LecturerRegisterController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\TimetableController;
 use App\Http\Controllers\ResultsController;
 use App\Http\Controllers\AnnouncementController;
->>>>>>> Stashed changes
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -41,7 +40,6 @@ Route::middleware('auth', 'twofactor')->group(function () {
     Route::resource('courses', CourseController::class);
 });
 
-<<<<<<< Updated upstream
 Route::middleware('auth','twofactor', 'studentMiddleware')->group(function () {
     Route::get('/dashboard', [studentController::class, 'index'])->name('dashboard');
 });
@@ -53,15 +51,17 @@ Route::middleware('auth','twofactor', 'lecturerMiddleware')->group(function () {
 Route::middleware('auth','twofactor', 'adminMiddleware')->group(function () {
     Route::get('/admin/dashboard', [adminController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/register-student', [StudentRegisterController::class, 'showStudentRegistrationForm'])->name('register.student.form');
-    Route::post('/register-student', [StudentRegisterController::class, 'registerStudent'])->name('register.student');
+    Route::post('/admin/register-student', [StudentRegisterController::class, 'registerStudent'])->name('register.student');
+    Route::get('/admin/register-lecturer', [LecturerRegisterController::class, 'showLecturerRegistrationForm'])->name('register.lecturer.form');
+    Route::post('/admin/register-lecturer', [LecturerRegisterController::class, 'registerLecturer'])->name('register.lecturer');
 
 });
-=======
+
 // Academics Section
 Route::get('/courses', [CourseController::class, 'index'])->name('courses')->middleware('auth');
 Route::get('/timetable', [TimetableController::class, 'index'])->name('timetable')->middleware('auth');
 Route::get('/results', [ResultsController::class, 'index'])->name('results')->middleware('auth');
->>>>>>> Stashed changes
+
 
 require __DIR__.'/auth.php';
 
