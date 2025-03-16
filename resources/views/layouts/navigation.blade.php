@@ -20,7 +20,7 @@
 
                     <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
                         {{ __('Dashboard') }}
-                    </x-nav-link>\
+                    </x-nav-link>
             <!-- Navigation Links -->
             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                 <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
@@ -61,12 +61,15 @@
                         {{ __('Campus Resources') }}
                     </x-nav-link>
 
-                    <!-- Resource Booking Page, Added by Nuski to Navigation Bar -->
                     <x-nav-link :href="route('register.student.form')" :active="request()->routeIs('register.student.form')">
                         {{ __('Register Students') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('register.lecturer.form')" :active="request()->routeIs('register.lecturer.form')">
+                        {{ __('Register Lecturer') }}
+                    </x-nav-link>
                 
-                <!--Add Lecyurer Navigation Links Here -->
+                <!--Add Lecturer Navigation Links Here -->
                 @elseif(Auth::user()->usertype == 'lecturer')
 
 
