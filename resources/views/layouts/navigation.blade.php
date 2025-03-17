@@ -19,8 +19,8 @@
                     <!-- Academics Dropdown -->
                     <x-dropdown>
                         <x-slot name="trigger">
-                            <x-nav-link>
-                                <button type="button" class="p-3">
+                            <x-nav-link :active="request()->routeIs('courses') || request()->routeIs('timetable')">
+                                <button type="button" class="p-2">
                                     {{ __('Academics') }}<br>{{ __('...') }}
                                 </button>
                             </x-nav-link>
