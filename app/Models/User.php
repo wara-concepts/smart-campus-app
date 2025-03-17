@@ -20,9 +20,11 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'password',
+        'usertype',
     ];
 
     /**
@@ -53,7 +55,7 @@ class User extends Authenticatable
      */
     public function getViews(): array {
         $views = [
-            ['view' => 'Dashboard', 'route' => 'home'],
+            ['view' => 'Dashboard', 'route' => 'auth.login'],
         ];
         return $views;
     }
@@ -71,5 +73,11 @@ class User extends Authenticatable
     //     return [];
     //     }
     // }
+
+    public function student()
+    {
+        return $this->hasOne(Student::class);
+    }
+
 
 }

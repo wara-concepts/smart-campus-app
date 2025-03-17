@@ -70,7 +70,7 @@ class CourseController extends Controller
         $course = Course::findOrFail($id);
         $course->update($request->all());
 
-        return redirect()->route('courses')->with('success', 'Course updated successfully.');
+        return redirect()->route('courses.index')->with('success', 'Course updated successfully.');
     }
 
     /**

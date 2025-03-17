@@ -1,22 +1,29 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Course extends Model
+class Student extends Model
 {
     use HasFactory;
+
     protected $fillable = [
-        'name', 
-        'code', 
-        'description',
-        'credits'
+        'user_id',
+        'address',
+        'dob',
+        'course',
     ];
 
-    // Example relationship (if courses belong to users)
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+
+    public function course()
+{
+    return $this->belongsTo(Course::class);
 }
+}
+
