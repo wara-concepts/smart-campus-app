@@ -54,6 +54,7 @@ Route::middleware('auth','twofactor', 'adminMiddleware')->group(function () {
     Route::post('/admin/register-student', [StudentRegisterController::class, 'registerStudent'])->name('register.student');
     Route::get('/admin/register-lecturer', [LecturerRegisterController::class, 'showLecturerRegistrationForm'])->name('register.lecturer.form');
     Route::post('/admin/register-lecturer', [LecturerRegisterController::class, 'registerLecturer'])->name('register.lecturer');
+    Route::get('/admin/view-users', [adminController::class, 'viewusers'])->name('view.users');
 
 });
 
