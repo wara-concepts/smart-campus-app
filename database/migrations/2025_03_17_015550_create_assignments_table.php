@@ -7,17 +7,17 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
-        Schema::create('courses', function (Blueprint $table) {
+        Schema::create('assignments', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('description')->nullable();
+            $table->string('title');
+            $table->string('course');
+            $table->enum('status', ['Pending', 'Completed'])->default('Pending');
             $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('courses');
+        Schema::dropIfExists('assignments');
     }
 };
-

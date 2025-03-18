@@ -18,12 +18,12 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('courses', function (Blueprint $table) {
-            $table->id()->primary();
-            $table->foreignId('department_id');
-            $table->string('course');
-            $table->timestamps();
-        });
+        // Schema::create('courses', function (Blueprint $table) {
+        //     $table->id()->primary();
+        //     $table->foreignId('department_id');
+        //     $table->string('course');
+        //     $table->timestamps();
+        // });
 
         Schema::create('class_rooms', function (Blueprint $table) {
             $table->id()->primary();

@@ -8,11 +8,21 @@ use App\Models\Course;
 class CourseController extends Controller
 {
     /**
-     * Display a listing of courses.
+     * Display a listing of courses with pagination and search.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $courses = Course::all(); // Fetch all courses from the database
+        $query = Course::query();
+
+        // Search functionality
+        if ($request->has('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%')
+                  ->orWhere('description', 'like', '%' . $request->search . '%');
+        }
+
+        // Pagination (5 courses per page)
+        $courses = $query->paginate(5);
+
         return view('courses', compact('courses'));
     }
 
@@ -21,7 +31,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        return view('courses.create'); // Return the create course form view
+        return view('courses.create');
     }
 
     /**
@@ -34,7 +44,7 @@ class CourseController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        Course::create($request->all()); // Insert into database
+        Course::create($request->all());
 
         return redirect()->route('courses')->with('success', 'Course created successfully.');
     }
@@ -44,7 +54,7 @@ class CourseController extends Controller
      */
     public function show($id)
     {
-        $course = Course::findOrFail($id); // Fetch course by ID
+        $course = Course::findOrFail($id);
         return view('courses.show', compact('course'));
     }
 

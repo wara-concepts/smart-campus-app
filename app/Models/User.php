@@ -23,8 +23,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'profile_picture', // Add this line
     ];
-
+    
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -57,19 +58,5 @@ class User extends Authenticatable
         ];
         return $views;
     }
-
-    // /**
-    //  * @return array
-    //  */
-
-    // public function getViewsFromDatabase(): array {
-    //     try {
-    //     $results = DB::table('master_views')->select('ViewName','ViewRoute')->get();
-    //     $views = $results -> map(function ($view) {return['view'=>$view->ViewName,'route'=>$view->ViewRoute];})->toarray();
-    //     return $views;
-    //     } catch (\Exception $e) {
-    //     return [];
-    //     }
-    // }
 
 }
