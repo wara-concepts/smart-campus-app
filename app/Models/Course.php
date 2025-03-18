@@ -1,8 +1,5 @@
 <?php
-
 namespace App\Models;
-
-
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,18 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'name', 
+        'code', 
+        'description',
+        'credits'
+    ];
 
-
-    //Table columns
-    protected $fillable = ['id','department_id','course']; 
-
-    // Table name
-    protected $table = 'courses';
-
-    // Relationship (if students belong to a course)
-    public function students()
+    // Example relationship (if courses belong to users)
+    public function user()
     {
-        return $this->hasMany(Student::class);
-
+        return $this->belongsTo(User::class);
     }
 }
