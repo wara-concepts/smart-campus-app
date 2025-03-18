@@ -9,95 +9,18 @@
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
                 </div>
-
-
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-
-
-                <!--Add Admin Navigation Links Here -->
-                @if(Auth::user()->usertype == 'admin') 
-
-                    <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>\
-            <!-- Navigation Links -->
-            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                     {{ __('Dashboard') }}
-                </x-nav-link>
-
-                <!-- Academics Dropdown -->
-                <x-dropdown align="left" width="48">
-                    <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-6 text-gray-800 hover:text-gray-800 focus:outline-none">
-                            <span>Academics</span>
-                            <svg class="ms-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                            </svg>
-                        </button>
-                    </x-slot>
-
-                    <x-slot name="content">
-                         <x-dropdown-link :href="route('courses')">
-                            {{ __('My Courses') }}
-                        </x-dropdown-link>
-                        <x-dropdown-link :href="route('timetable')">
-                            {{ __('Timetable') }}
-                        </x-dropdown-link>
-                        <x-dropdown-link :href="route('results')">
-                            {{ __('Exam Results') }}
-                        </x-dropdown-link>
-                    </x-slot>
-                </x-dropdown>
-
-                <x-nav-link :href="route('announcements')" :active="request()->routeIs('announcements')">
-                    {{ __('Announcements') }}
-                </x-nav-link>
-                    <!-- Academics Dropdown -->
-                    <x-dropdown>
-                        <x-slot name="trigger">
-                            <x-nav-link :active="request()->routeIs('courses') || request()->routeIs('timetable')">
-                                <button type="button" class="p-2">
-                                    {{ __('Academics') }}<br>{{ __('...') }}
-                                </button>
-                            </x-nav-link>
-                        </x-slot>
-
-                        <x-slot name="content">
-                            <x-dropdown-link :href="route('courses')">
-                                {{ __('My Courses') }}
-                            </x-dropdown-link>
-                            <x-dropdown-link :href="route('timetable')">
-                                {{ __('Timetable') }}
-                            </x-dropdown-link>
-                        </x-slot>
-                    </x-dropdown>
-
-                    <x-nav-link :href="route('announcements')" :active="request()->routeIs('announcements')">
-                        {{ __('Announcements') }}
-                    </x-nav-link>
-                    <!-- Resource Booking Page, Added by Nuski to Navigation Bar -->
-                    <x-nav-link :href="route('resources')" :active="request()->routeIs('resources')">
-                        {{ __('Campus Resources') }}
-                    </x-nav-link>
-
-                    <!-- Resource Booking Page, Added by Nuski to Navigation Bar -->
-                    <x-nav-link :href="route('register.student.form')" :active="request()->routeIs('register.student.form')">
-                        {{ __('Register Students') }}
-                    </x-nav-link>
-                
-                <!--Add Lecyurer Navigation Links Here -->
-                @elseif(Auth::user()->usertype == 'lecturer')
-
-
-                <!--Add Student Navigation Links Here -->
-                @elseif(Auth::user()->usertype == 'student')
-
-                @endif
-                
-
-                
+                    <!--Add Admin Navigation Links Here -->
+                    @if (Auth::user()->usertype == 'admin')
+                        @include('admin-navigation')
+                        <!--Add Lecturer Navigation Links Here -->
+                    @elseif(Auth::user()->usertype == 'lecturer')
+                        @include('lecturer-navigation')
+                        <!--Add Student Navigation Links Here -->
+                    @elseif(Auth::user()->usertype == 'student')
+                        @include('student-navigation')
+                    @endif
                 </div>
             </div>
 
@@ -107,7 +30,19 @@
                     <x-slot name="trigger">
                         <button
                             class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <div>Hello {{ Auth::user()->name }}</div>
+                            <div>
+                                <span>Hello</span>
+                                <span>{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</span>
+                                <span class="badge badge-pill badge-dark">
+                                    @if (Auth::user()->usertype == 'admin')
+                                        <p>Admin</p>
+                                    @elseif(Auth::user()->usertype == 'lecturer')
+                                        <p>Lecturer</p>
+                                    @elseif(Auth::user()->usertype == 'student')
+                                        <p>Student</p>
+                                    @endif
+                                </span>
+                            </div>
 
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
@@ -157,7 +92,7 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
+        {{-- <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
@@ -189,6 +124,6 @@
                     </x-responsive-nav-link>
                 </form>
             </div>
-        </div>
+        </div> --}}
     </div>
 </nav>
