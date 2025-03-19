@@ -10,7 +10,8 @@ class Department extends Model
     /** @use HasFactory<\Database\Factories\DepartmentFactory> */
     use HasFactory;
 
-    protected $table = 'departments';
+  //nuwan had the table departments
+    protected $table = 'department';
 
         /** @var list<string> */
         protected $fillable = ['id','department','created_at','updated_at'];

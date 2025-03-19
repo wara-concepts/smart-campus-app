@@ -15,6 +15,7 @@ use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\ResourceReservationController;
 use App\Http\Controllers\EventController;
 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -78,12 +79,14 @@ Route::middleware(['auth', 'twofactor'])->group(function () {
 
     Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcements');
     Route::resource('courses', CourseController::class);
+
     Route::get('/courses/create', [CourseController::class, 'create'])->name('courses.create');
     Route::get('/courses', [CourseController::class, 'index'])->name('courses');
 
     Route::resource('timetable', TimetableController::class);
     Route::get('/timetable', [TimetableController::class, 'index'])->name('timetable');
 });
+
 
 Route::middleware(['auth', 'twofactor', 'studentMiddleware'])->group(function () {
     Route::get('/dashboard', [studentController::class, 'index'])->name('dashboard');
@@ -102,6 +105,14 @@ Route::middleware(['auth', 'twofactor', 'adminMiddleware'])->group(function () {
 
 });
 
-require __DIR__ . '/auth.php';
+
+// Academics Section
+Route::get('/courses', [CourseController::class, 'index'])->name('courses')->middleware('auth');
+Route::get('/timetable', [TimetableController::class, 'index'])->name('timetable')->middleware('auth');
+Route::get('/results', [ResultsController::class, 'index'])->name('results')->middleware('auth');
+
+
+require __DIR__.'/auth.php';
+
 
 
