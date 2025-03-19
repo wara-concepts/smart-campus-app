@@ -4,13 +4,14 @@
 <x-nav-link :href="route('announcements')" :active="request()->routeIs('announcements')">
     {{ __('Announcements') }}
 </x-nav-link>
-<!-- Resource Booking Page, Added by Nuski to Navigation Bar -->
 <x-nav-link :href="route('resources')" :active="request()->routeIs('resources')">
     {{ __('Campus Resources') }}
 </x-nav-link>
-<!-- Resource Booking Page, Added by Nuski to Navigation Bar -->
 <x-nav-link :href="route('register.student.form')" :active="request()->routeIs('register.student.form')">
     {{ __('Register Students') }}
+</x-nav-link>
+<x-nav-link :href="route('resource-reservation.index')" :active="request()->routeIs('resource-reservation.*')">
+    {{ __('Resource Reservation') }}
 </x-nav-link>
 <!-- Academics Dropdown -->
 <x-dropdown>
@@ -30,11 +31,7 @@
         </x-dropdown-link>
     </x-slot>
 </x-dropdown>
-<!-- Resources Reservation Dropdown -->
-<x-nav-link :href="route('resource-reservation.index')" :active="request()->routeIs('resource-reservation.*')">
-    {{ __('Resource Reservation') }}
-</x-nav-link>
-<!-- Academics Dropdown -->
+<!-- Events Dropdown -->
 <x-dropdown>
     <x-slot name="trigger">
         <x-nav-link :active="request()->routeIs('courses') || request()->routeIs('timetable')">
