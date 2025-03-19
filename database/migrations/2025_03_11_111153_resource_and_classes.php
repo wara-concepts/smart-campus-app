@@ -17,10 +17,17 @@ return new class extends Migration {
             $table->timestamps();
         });
 
+        // Schema::create('courses', function (Blueprint $table) {
+        //     $table->id()->primary();
+        //     $table->foreignId('department_id');
+        //     $table->string('course');
+        //     $table->timestamps();
+        // });
+
         Schema::create('courses', function (Blueprint $table) {
-            $table->id()->primary();
-            $table->foreignId('department_id');
-            $table->string('course');
+            $table->string('name');
+            $table->string('description');
+            $table->integer('credits');
             $table->timestamps();
         });
 
