@@ -49,15 +49,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/events/{id}/edit', [EventController::class, 'edit'])->name('events.edit');
     Route::put('/events/{id}', [EventController::class, 'update'])->name('events.update');
     Route::delete('/events/{id}', [EventController::class, 'destroy'])->name('events.destroy');
-    
+
     // Event registration routes
     Route::post('/events/{id}/register', [EventController::class, 'register'])->name('events.register');
     Route::post('/events/{id}/unregister', [EventController::class, 'unregister'])->name('events.unregister');
-    
+
     // Attendance management routes
     Route::get('/events/{id}/attendance', [EventController::class, 'attendance'])->name('events.attendance');
     Route::post('/events/{id}/attendance', [EventController::class, 'updateAttendance'])->name('events.update-attendance');
-    
+
     // My events route
     Route::get('/my-events', [EventController::class, 'myEvents'])->name('events.my');
 });
@@ -66,9 +66,11 @@ Route::middleware('auth', 'twofactor')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/resources',[ResourceController::class,'index'])->name('resources');
+    Route::get('/resources', [ResourceController::class, 'index'])->name('resources');
     Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcements');
     Route::get('/courses/create', [CourseController::class, 'create'])->name('courses.create');
+});
+
 Route::middleware(['auth', 'twofactor'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -112,7 +114,7 @@ Route::get('/timetable', [TimetableController::class, 'index'])->name('timetable
 Route::get('/results', [ResultsController::class, 'index'])->name('results')->middleware('auth');
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 
 
