@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Department extends Model
 {
-    /** @use HasFactory<\Database\Factories\DepartmentFactory> */
-    use HasFactory;
+  /** @use HasFactory<\Database\Factories\DepartmentFactory> */
+  use HasFactory;
 
   //nuwan had the table departments
-    protected $table = 'department';
+  protected $table = 'departments';
 
-        /** @var list<string> */
-        protected $fillable = ['id','department','created_at','updated_at'];
+  /** @var list<string> */
+  protected $fillable = ['id', 'department', 'created_at', 'updated_at'];
 }
