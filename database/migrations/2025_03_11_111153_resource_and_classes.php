@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         //departments
         Schema::create('departments', function (Blueprint $table) {
-            $table->id()->primary();
+            $table->id();
             $table->string('department');
             $table->timestamps();
         });
@@ -25,14 +25,14 @@ return new class extends Migration {
         // });
 
         Schema::create('class_rooms', function (Blueprint $table) {
-            $table->id()->primary();
+            $table->id();
             $table->foreignId('department_id');
             $table->integer('capacity');
             $table->timestamps();
         });
 
         Schema::create('resources', function (Blueprint $table) {
-            $table->id()->primary();
+            $table->id();
             $table->foreignId('department_id');
             $table->string('name');
             $table->integer('qty');
@@ -40,7 +40,7 @@ return new class extends Migration {
         });
 
         Schema::create('resource_reserve', function (Blueprint $table) {
-            $table->id()->primary();
+            $table->id();
             $table->foreignId('resource_id');
             $table->foreignId('user_id');
             $table->dateTime('request_dateTime', precision: 0);
@@ -51,7 +51,7 @@ return new class extends Migration {
         });
 
         Schema::create('class_reserve', function (Blueprint $table) {
-            $table->id()->primary();
+            $table->id();
             $table->foreignId('class_id');
             $table->foreignId('user_id');
             $table->dateTime('request_dateTime', precision: 0);
@@ -61,13 +61,18 @@ return new class extends Migration {
         });
 
         Schema::create('events', function (Blueprint $table) {
-            $table->id()->primary();
-            $table->string('name');
-            $table->foreignId('user_id');
-            $table->dateTime('request_dateTime', precision: 0);
-            $table->dateTime('handover_dateTime', precision: 0);
-            $table->string('status');
-            $table->timestamps();
+            $table->id();
+                $table->string('title');
+                $table->text('description');
+                $table->foreignId('organizer_id')->constrained('users')->onDelete('cascade');
+                $table->string('location');
+                $table->date('event_date');
+                $table->time('start_time');
+                $table->time('end_time');
+                $table->integer('max_participants')->default(0); // 0 means unlimited
+                $table->dateTime('registration_deadline')->nullable();
+                $table->string('status')->default('active'); // active, canceled, completed
+                $table->timestamps();
         });
     }
 
