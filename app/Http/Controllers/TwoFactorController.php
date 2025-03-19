@@ -12,8 +12,8 @@ class TwoFactorController extends Controller
     {
         $user = Auth::user();
 
-        // Generate a 6-digit random code
-        $code = rand(100000, 999999);
+        // Generate a 4-digit random code
+        $code = rand(1000, 9999);
         $user->two_factor_code = $code;
         $user->save();
 
@@ -35,29 +35,25 @@ class TwoFactorController extends Controller
 
         if ($request->code == $user->two_factor_code) {
             // Mark as authenticated and clear the code
-            session(['two_factor_authenticated' => true]); 
+            session(['two_factor_authenticated' => true]);
             $user->two_factor_code = null;
             $user->save();
 
 
             if (Auth::user()->usertype == 'lecturer') {
-           
+
                 return redirect()->intended('/lecturer/dashboard');
-        
-                }
 
-            elseif (Auth::user()->usertype == 'admin') {
-           
+            } elseif (Auth::user()->usertype == 'admin') {
+
                 return redirect()->intended('/admin/dashboard');
-        
-                }
 
-            elseif (Auth::user()->usertype == 'student') {
-           
+            } elseif (Auth::user()->usertype == 'student') {
+
                 return redirect()->intended('/dashboard');
-        
-                }
-            
+
+            }
+
         }
 
         return redirect()->route('two-factor.index')->withErrors(['code' => 'The provided code is incorrect.']);
