@@ -14,4 +14,11 @@ class department extends Model
 
         /** @var list<string> */
         protected $fillable = ['id','department','created_at','updated_at'];
+
+
+        public function lecturers()
+    {
+        return $this->hasMany(Lecturer::class);
+
+    }
 }
