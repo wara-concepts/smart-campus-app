@@ -59,6 +59,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/two-factor', [TwoFactorController::class, 'index'])->name('two-factor.index');
     Route::post('/two-factor', [TwoFactorController::class, 'verify'])->name('two-factor.verify');
 
+    //Resource Reservation Routes
     Route::get('/resource-reservation', [ResourceReservationController::class, 'index'])->name('resource-reservation.index');
     Route::post('/resource-reservation', [ResourceReservationController::class, 'store'])->name('resource-reservation.store');
     Route::get('/resource-reservation/history', [ResourceReservationController::class, 'history'])->name('resource-reservation.history');
@@ -123,20 +124,5 @@ Route::middleware(['auth', 'twofactor', 'adminMiddleware'])->group(function () {
     Route::post('/admin/register-student', [StudentRegisterController::class, 'registerStudent'])->name('register.student');
     Route::get('/admin/register-lecturer', [LecturerRegisterController::class, 'showLecturerRegistrationForm'])->name('register.lecturer.form');
     Route::post('/admin/register-lecturer', [LecturerRegisterController::class, 'registerLecturer'])->name('register.lecturer');
-    
-    Route::get('/admin/view-users', [adminController::class, 'viewusers'])->name('view.users');
-    Route::get('/admin/{user}/edit', [adminController::class, 'edit'])->name('adminusers.edit');
-    Route::put('/admin/{user}', [adminController::class, 'update'])->name('adminusers.update');
-    Route::delete('/admin/{user}', [adminController::class, 'destroy'])->name('adminusers.destroy');
-
-    Route::get('/admin/view-students', [adminController::class, 'viewstudents'])->name('view.students');
-    Route::get('/admin/{user}/edit-student', [adminController::class, 'editstudent'])->name('student.edit');
-    Route::put('/admin/student/{user}', [adminController::class, 'updatestudent'])->name('student.update');
-    Route::delete('/admin/student/{user}', [adminController::class, 'destroystudent'])->name('student.destroy');
-
-    Route::get('/admin/view-lecturers', [adminController::class, 'viewlecturers'])->name('view.lecturers');
-    Route::get('/admin/{user}/edit-lecturer', [adminController::class, 'editlecturer'])->name('lecturer.edit');
-    Route::put('/admin/lecturer/{user}', [adminController::class, 'updatelecturer'])->name('lecturer.update');
-    Route::delete('/admin/lecturer/{user}', [adminController::class, 'destroylecturer'])->name('lecturer.destroy');
 
 });
