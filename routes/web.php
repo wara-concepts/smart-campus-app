@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ResourceController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TwoFactorController;
 use App\Http\Controllers\student\studentController;
 use App\Http\Controllers\lecturer\lecturerController;
@@ -23,6 +22,7 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
@@ -138,9 +138,6 @@ Route::middleware(['auth', 'twofactor', 'adminMiddleware'])->group(function () {
 Route::get('/courses', [CourseController::class, 'index'])->name('courses')->middleware('auth');
 Route::get('/timetable', [TimetableController::class, 'index'])->name('timetable')->middleware('auth');
 Route::get('/results', [ResultsController::class, 'index'])->name('results')->middleware('auth');
-
-
-//require __DIR__ . '/auth.php';
 
 
 
