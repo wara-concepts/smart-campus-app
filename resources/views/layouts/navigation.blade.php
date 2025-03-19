@@ -22,7 +22,7 @@
                 </div>
             </div>
             <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
+            <div class="flex items-center ml-auto">
                 @include('layouts.usersettings-navigation')
             </div>
         </div>
