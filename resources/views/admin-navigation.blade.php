@@ -4,9 +4,6 @@
 <x-nav-link :href="route('announcements')" :active="request()->routeIs('announcements')">
     {{ __('Announcements') }}
 </x-nav-link>
-<x-nav-link :href="route('resources')" :active="request()->routeIs('resources')">
-    {{ __('Campus Resources') }}
-</x-nav-link>
 <x-nav-link :href="route('register.student.form')" :active="request()->routeIs('register.student.form')">
     {{ __('Register Students') }}
 </x-nav-link>
