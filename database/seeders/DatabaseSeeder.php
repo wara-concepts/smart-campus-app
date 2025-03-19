@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\department;
+use App\Models\Department;
 use App\Models\Resource;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
             "updated_at"=> now(),
         ]);
 
-        department::factory()->create([
+        Department::factory()->create([
             "id" => 0,
             "department" => "Sample Department",
             "created_at" => now(),

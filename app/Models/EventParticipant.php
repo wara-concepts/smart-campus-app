@@ -5,31 +5,27 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Student extends Model
+class EventParticipant extends Model
 {
     use HasFactory;
 
-    protected $table = 'student';
-    
     protected $fillable = [
-        'id',
+        'event_id',
         'user_id',
-        'full_name',
-        'nic',
-        'dob',
-        'address',
-        'phone_number',
-        'course_id',
+        'registration_date',
+        'attendance_status',
+        'feedback'
     ];
 
+    // Relationship with Event
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
+    }
+
+    // Relationship with User
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
-    public function course()
-{
-    return $this->belongsTo(Course::class);
 }
-}
-
