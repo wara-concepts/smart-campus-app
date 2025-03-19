@@ -68,7 +68,7 @@ class StudentRegisterController extends Controller
         // Create student
         Student::create([
             'user_id' => $user->id,
-            'id' => $studentID,
+            'student_id' => $studentID,
             'address' => $request->address,
             'full_name' => $request->fullname,
             'nic' => $request->nic,

@@ -12,7 +12,14 @@ class Department extends Model
 
   //nuwan had the table departments
   protected $table = 'departments';
+  
+        /** @var list<string> */
+        protected $fillable = ['id','department','created_at','updated_at'];
 
-  /** @var list<string> */
-  protected $fillable = ['id', 'department', 'created_at', 'updated_at'];
+
+        public function lecturers()
+    {
+        return $this->hasMany(Lecturer::class);
+
+    }
 }

@@ -41,7 +41,7 @@ return new class extends Migration
         });
 
         Schema::create('student', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->string('student_id')->primary();
             $table->foreignId('user_id')->nullable()->index();
             $table->string('full_name');
             $table->string('nic');
