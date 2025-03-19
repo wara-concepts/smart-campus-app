@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -18,12 +17,12 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('courses', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('department_id');
-            $table->string('course');
-            $table->timestamps();
-        });
+        // Schema::create('courses', function (Blueprint $table) {
+        //     $table->id()->primary();
+        //     $table->foreignId('department_id');
+        //     $table->string('course');
+        //     $table->timestamps();
+        // });
 
         Schema::create('class_rooms', function (Blueprint $table) {
             $table->id();
@@ -83,7 +82,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('departments');
-        Schema::dropIfExists('courses');
+        // Schema::dropIfExists('courses');
         Schema::dropIfExists('class_rooms');
         Schema::dropIfExists('resources');
         Schema::dropIfExists('resource_reserve');
