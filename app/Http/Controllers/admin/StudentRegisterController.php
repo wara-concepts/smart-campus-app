@@ -29,8 +29,8 @@ class StudentRegisterController extends Controller
             'email' => 'required|string|email|max:191|unique:users',
             'fullname' => 'required|string|max:191',
             'address' => 'required|string|max:191',
-            'nic' => 'required|string|max:12',   
-            'phone' => 'required|string|max:20',   
+            'nic' => 'required|string|max:12',
+            'phone' => 'required|string|max:20',
             'dob' => 'required|date',
             'course' => 'required|string|max:191',
         ]);
@@ -40,13 +40,13 @@ class StudentRegisterController extends Controller
         $prefix = "ST{$year}";
 
         // Get the highest student ID of the current year
-        $lastStudent = Student::where('id', 'LIKE', "{$prefix}%")
-            ->orderBy('id', 'desc')
+        $lastStudent = Student::where('student_id', 'LIKE', "{$prefix}%")
+            ->orderBy('student_id', 'desc')
             ->first();
 
         // Extract the numeric part and increment
         if ($lastStudent) {
-            $lastNumber = (int)substr($lastStudent->id, -4);
+            $lastNumber = (int) substr($lastStudent->id, -4);
             $newNumber = str_pad($lastNumber + 1, 4, '0', STR_PAD_LEFT);
         } else {
             $newNumber = "0001";
@@ -84,7 +84,7 @@ class StudentRegisterController extends Controller
         event(new Registered($user));
 
         return redirect()->route('register.student.form')->with('success', "Student registered successfully! ID: {$studentID}");
-    
+
     }
 
 

@@ -19,24 +19,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($lecturers as $user)
+                        @foreach ($lecturers as $user)
                             <tr class="text-center">
-                                <td class="border border-gray-300 px-4 py-2">{{ $user->lecturer->lecturer_id }}</td>
+                                <td class="border border-gray-300 px-4 py-2">{{ $user->lecturer->id }}</td>
                                 <td class="border border-gray-300 px-4 py-2">{{ $user->first_name }}</td>
                                 <td class="border border-gray-300 px-4 py-2">{{ $user->last_name }}</td>
                                 <td class="border border-gray-300 px-4 py-2">{{ $user->email }}</td>
                                 <td class="border border-gray-300 px-4 py-2">
-                                <form action="{{ route('lecturer.edit', $user->id) }}" method="GET" style="display:inline;">
-                            <button type="submit" class="btn btn-primary">Edit</button>
-                        </form>
+                                    <form action="{{ route('lecturer.edit', $user->id) }}" method="GET"
+                                        style="display:inline;">
+                                        <button type="submit" class="btn btn-primary">Edit</button>
+                                    </form>
 
-                                    <form action="{{ route('lecturer.destroy', $user->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger"
-                                onclick="return confirm('Are you sure?')">Delete</button>
-                        </form>
-                                   </td>
+                                    <form action="{{ route('lecturer.destroy', $user->id) }}" method="POST"
+                                        style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger"
+                                            onclick="return confirm('Are you sure?')">Delete</button>
+                                    </form>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -45,5 +47,5 @@
         </div>
     </div>
 
-    
+
 </x-app-layout>
