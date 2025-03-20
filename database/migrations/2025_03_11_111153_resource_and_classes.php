@@ -24,14 +24,6 @@ return new class extends Migration {
         //     $table->timestamps();
         // });
 
-        Schema::create('courses', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('description');
-            $table->integer('credits');
-            $table->timestamps();
-        });
-
         Schema::create('class_rooms', function (Blueprint $table) {
             $table->id();
             $table->foreignId('department_id');
