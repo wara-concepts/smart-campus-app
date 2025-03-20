@@ -7,18 +7,17 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
-        Schema::create('courses', function (Blueprint $table) {
+        Schema::create('learning_outcomes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('code')->unique();
-            $table->integer('credits');
             $table->text('description')->nullable();
+            $table->foreignId('course_id')->constrained()->onDelete('cascade'); 
             $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('courses');
+        Schema::dropIfExists('learning_outcomes');
     }
 };

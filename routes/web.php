@@ -37,6 +37,9 @@ Route::middleware('auth', 'twofactor')->group(function () {
 
     // Announcements
     Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcements');
+    Route::get('announcements/{id}', [AnnouncementController::class, 'show'])->name('announcements.show');
+    Route::get('/announcements/download/{id}', [AnnouncementController::class, 'download'])->name('announcements.download');
+    Route::resource('announcements', AnnouncementController::class)->except(['index', 'show']);
 
     // Courses
     Route::resource('courses', CourseController::class);
@@ -50,6 +53,7 @@ Route::middleware('auth', 'twofactor')->group(function () {
     Route::resource('assignments', AssignmentController::class);
     Route::get('/assignments/create', [AssignmentController::class, 'create'])->name('assignments.create');
     Route::post('/assignments', [AssignmentController::class, 'store'])->name('assignments.store');
+    Route::put('/assignments/{assignment}', [AssignmentController::class, 'update'])->name('assignments.update'); 
 
     // Events
     Route::get('/events/create', [EventController::class, 'create'])->name('events.create');

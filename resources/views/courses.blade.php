@@ -31,6 +31,8 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Course Name</th>
+                                    <th>Course Code</th>
+                                    <th>Credits</th>
                                     <th>Description</th>
                                     <th>Actions</th>
                                 </tr>
@@ -40,6 +42,8 @@
                                     <tr>
                                         <td>{{ $course->id }}</td>
                                         <td>{{ $course->name }}</td>
+                                        <td>{{ $course->code }}</td>
+                                        <td>{{ $course->credits }}</td>
                                         <td>{{ $course->description }}</td>
                                         <td>
                                             <a href="{{ route('courses.show', $course->id) }}" class="btn btn-info btn-sm">View</a>

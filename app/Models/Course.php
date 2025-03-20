@@ -13,18 +13,23 @@ class Course extends Model
         'name', 
         'code', 
         'description',
-        'credits'
+        'credits',
+        'materials' 
     ];
 
-    // Relationship: A Course has many Timetables
-    public function timetables()
-    {
-        return $this->hasMany(Timetable::class, 'course_id');
-    }
+    protected $casts = [
+        'materials' => 'array',
+    ];
 
-    // If courses belong to users (instructors, admins, etc.)
-    public function user()
+    // // Define the relationship with LearningOutcome
+    // public function learningOutcomes()
+    // {
+    //     return $this->hasMany(LearningOutcome::class);
+    // }
+
+    // Define the relationship with Material
+    public function materials()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(Material::class);
     }
 }

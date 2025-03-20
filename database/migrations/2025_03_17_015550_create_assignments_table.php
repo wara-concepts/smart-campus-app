@@ -10,8 +10,10 @@ return new class extends Migration {
         Schema::create('assignments', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('course');
+            $table->foreignId('course_id')->constrained('courses')->onDelete('cascade');
             $table->enum('status', ['Pending', 'Completed'])->default('Pending');
+            $table->date('deadline');
+            $table->string('submission')->nullable();
             $table->timestamps();
         });
     }
