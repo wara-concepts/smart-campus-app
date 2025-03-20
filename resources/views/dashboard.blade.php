@@ -14,4 +14,29 @@
             </div>
         </div>
     </div>
+
+    <!-- Include FullCalendar -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.11.3/main.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.11.3/main.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: {!! json_encode($events->map(function($event) {
+                    return [
+                        'title' => $event->name,
+                        'start' => $event->event_date,
+                        'end' => $event->event_date,
+                        'color' => '#007bff'
+                    ];
+                })) !!},
+                eventClick: function(info) {
+                    alert('Event: ' + info.event.title);
+                }
+            });
+            calendar.render();
+        });
+    </script>
 </x-app-layout>

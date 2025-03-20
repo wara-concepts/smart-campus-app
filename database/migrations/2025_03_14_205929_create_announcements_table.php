@@ -10,7 +10,10 @@ return new class extends Migration {
         Schema::create('announcements', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('category'); // Added category
+            $table->date('publish_date'); // Added publish date
             $table->text('content');
+            $table->string('attachment')->nullable(); // Added attachment column
             $table->timestamps();
         });
     }
@@ -20,4 +23,3 @@ return new class extends Migration {
         Schema::dropIfExists('announcements');
     }
 };
-
