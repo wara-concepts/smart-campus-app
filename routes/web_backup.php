@@ -1,6 +1,8 @@
 <?php
-use App\Http\Controllers\Controller;
+
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ResourceController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TwoFactorController;
 use App\Http\Controllers\student\studentController;
 use App\Http\Controllers\lecturer\lecturerController;
@@ -12,60 +14,33 @@ use App\Http\Controllers\TimetableController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\ResourceReservationController;
 use App\Http\Controllers\EventController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\ConfirmablePasswordController;
-use App\Http\Controllers\Auth\EmailVerificationNotificationController;
-use App\Http\Controllers\Auth\EmailVerificationPromptController;
-use App\Http\Controllers\Auth\NewPasswordController;
-use App\Http\Controllers\Auth\PasswordController;
-use App\Http\Controllers\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\Auth\VerifyEmailController;
-use Illuminate\Support\Facades\Route;
 
-Route::middleware('guest')->group(function () {
 
-    Route::get('/', [Controller::class, 'showWelcomePage'])->name('welcomepage');
+Route::get('/', function () {
+    return view('welcome');
+});
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
-    Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
-    Route::post('register', [RegisteredUserController::class, 'store']);
 
-    Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
-    Route::post('login', [AuthenticatedSessionController::class, 'store']);
-
-    Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
-    Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
-
-    Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
-    Route::post('reset-password', [NewPasswordController::class, 'store'])->name('password.store');
-
+Route::middleware('auth')->group(function () {
+    Route::get('/two-factor', [TwoFactorController::class, 'index'])->name('two-factor.index');
+    Route::post('/two-factor', [TwoFactorController::class, 'verify'])->name('two-factor.verify');
 });
 
 Route::middleware('auth')->group(function () {
-
-    Route::get('verify-email', EmailVerificationPromptController::class)->name('verification.notice');
-
-    Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
-
-    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])->middleware('throttle:6,1')->name('verification.send');
-
-    Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])->name('password.confirm');
-    Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
-
-    Route::put('password', [PasswordController::class, 'update'])->name('password.update');
-
-    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
-
-    Route::get('/two-factor', [TwoFactorController::class, 'index'])->name('two-factor.index');
-    Route::post('/two-factor', [TwoFactorController::class, 'verify'])->name('two-factor.verify');
-
+    // Resource Reservation routes
     Route::get('/resource-reservation', [ResourceReservationController::class, 'index'])->name('resource-reservation.index');
     Route::post('/resource-reservation', [ResourceReservationController::class, 'store'])->name('resource-reservation.store');
     Route::get('/resource-reservation/history', [ResourceReservationController::class, 'history'])->name('resource-reservation.history');
     Route::put('/resource-reservation/{id}/cancel', [ResourceReservationController::class, 'cancel'])->name('resource-reservation.cancel');
     Route::post('/resource-reservation/check-availability', [ResourceReservationController::class, 'checkAvailability'])->name('resource-reservation.check-availability');
     Route::get('/resource-reservation/resources-by-department', [ResourceReservationController::class, 'getResourcesByDepartment'])->name('resource-reservation.resources-by-department');
+});
 
+// Event Management Routes
+Route::middleware(['auth'])->group(function () {
     // Basic event routes
     Route::get('/events', [EventController::class, 'index'])->name('events.index');
     Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
@@ -87,17 +62,24 @@ Route::middleware('auth')->group(function () {
     Route::get('/my-events', [EventController::class, 'myEvents'])->name('events.my');
 });
 
+Route::middleware('auth', 'twofactor')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/resources', [ResourceController::class, 'index'])->name('resources');
+    Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcements');
+    Route::get('/courses/create', [CourseController::class, 'create'])->name('courses.create');
+});
+
 Route::middleware(['auth', 'twofactor'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcements');
-    Route::get('announcements/{id}', [AnnouncementController::class, 'show'])->name('announcements.show');
-    Route::get('/announcements/download/{id}', [AnnouncementController::class, 'download'])->name('announcements.download');
-    Route::resource('announcements', AnnouncementController::class)->except(['index', 'show']);
+    Route::get('/resources', [ResourceController::class, 'index'])->name('resources');
+    Route::post('/resources', [ResourceController::class, 'store'])->name('resources.store');
 
-    // Courses
+    Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcements');
     Route::resource('courses', CourseController::class);
 
     Route::get('/courses/create', [CourseController::class, 'create'])->name('courses.create');
@@ -105,12 +87,6 @@ Route::middleware(['auth', 'twofactor'])->group(function () {
 
     Route::resource('timetable', TimetableController::class);
     Route::get('/timetable', [TimetableController::class, 'index'])->name('timetable');
-
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcements');
-    Route::get('/courses/create', [CourseController::class, 'create'])->name('courses.create');
 });
 
 
@@ -128,20 +104,17 @@ Route::middleware(['auth', 'twofactor', 'adminMiddleware'])->group(function () {
     Route::post('/admin/register-student', [StudentRegisterController::class, 'registerStudent'])->name('register.student');
     Route::get('/admin/register-lecturer', [LecturerRegisterController::class, 'showLecturerRegistrationForm'])->name('register.lecturer.form');
     Route::post('/admin/register-lecturer', [LecturerRegisterController::class, 'registerLecturer'])->name('register.lecturer');
-    
-    Route::get('/admin/view-users', [adminController::class, 'viewusers'])->name('view.users');
-    Route::get('/admin/{user}/edit', [adminController::class, 'edit'])->name('adminusers.edit');
-    Route::put('/admin/{user}', [adminController::class, 'update'])->name('adminusers.update');
-    Route::delete('/admin/{user}', [adminController::class, 'destroy'])->name('adminusers.destroy');
-
-    Route::get('/admin/view-students', [adminController::class, 'viewstudents'])->name('view.students');
-    Route::get('/admin/{user}/edit-student', [adminController::class, 'editstudent'])->name('student.edit');
-    Route::put('/admin/student/{user}', [adminController::class, 'updatestudent'])->name('student.update');
-    Route::delete('/admin/student/{user}', [adminController::class, 'destroystudent'])->name('student.destroy');
-
-    Route::get('/admin/view-lecturers', [adminController::class, 'viewlecturers'])->name('view.lecturers');
-    Route::get('/admin/{user}/edit-lecturer', [adminController::class, 'editlecturer'])->name('lecturer.edit');
-    Route::put('/admin/lecturer/{user}', [adminController::class, 'updatelecturer'])->name('lecturer.update');
-    Route::delete('/admin/lecturer/{user}', [adminController::class, 'destroylecturer'])->name('lecturer.destroy');
 
 });
+
+
+// Academics Section
+Route::get('/courses', [CourseController::class, 'index'])->name('courses')->middleware('auth');
+Route::get('/timetable', [TimetableController::class, 'index'])->name('timetable')->middleware('auth');
+Route::get('/results', [ResultsController::class, 'index'])->name('results')->middleware('auth');
+
+
+require __DIR__ . '/auth.php';
+
+
+

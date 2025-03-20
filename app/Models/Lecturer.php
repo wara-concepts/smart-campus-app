@@ -8,9 +8,10 @@ class Lecturer extends Model
 {
     
     protected $table = 'lecturer';
+    protected $primaryKey = 'lecturer_id';
     
     protected $fillable = [
-        'id',
+        'lecturer_id',
         'user_id',
         'full_name',
         'nic',
@@ -25,7 +26,7 @@ class Lecturer extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function course()
+    public function department()
 {
     return $this->belongsTo(department::class);
 }

@@ -24,6 +24,14 @@ return new class extends Migration {
         //     $table->timestamps();
         // });
 
+        Schema::create('courses', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('description');
+            $table->integer('credits');
+            $table->timestamps();
+        });
+
         Schema::create('class_rooms', function (Blueprint $table) {
             $table->id();
             $table->foreignId('department_id');
@@ -62,17 +70,17 @@ return new class extends Migration {
 
         Schema::create('events', function (Blueprint $table) {
             $table->id();
-                $table->string('title');
-                $table->text('description');
-                $table->foreignId('organizer_id')->constrained('users')->onDelete('cascade');
-                $table->string('location');
-                $table->date('event_date');
-                $table->time('start_time');
-                $table->time('end_time');
-                $table->integer('max_participants')->default(0); // 0 means unlimited
-                $table->dateTime('registration_deadline')->nullable();
-                $table->string('status')->default('active'); // active, canceled, completed
-                $table->timestamps();
+            $table->string('title');
+            $table->text('description');
+            $table->foreignId('organizer_id')->constrained('users')->onDelete('cascade');
+            $table->string('location');
+            $table->date('event_date');
+            $table->time('start_time');
+            $table->time('end_time');
+            $table->integer('max_participants')->default(0); // 0 means unlimited
+            $table->dateTime('registration_deadline')->nullable();
+            $table->string('status')->default('active'); // active, canceled, completed
+            $table->timestamps();
         });
     }
 
@@ -82,7 +90,7 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::dropIfExists('departments');
-        // Schema::dropIfExists('courses');
+        Schema::dropIfExists('courses');
         Schema::dropIfExists('class_rooms');
         Schema::dropIfExists('resources');
         Schema::dropIfExists('resource_reserve');

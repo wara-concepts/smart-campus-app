@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -41,7 +40,7 @@ return new class extends Migration
         });
 
         Schema::create('student', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->string('student_id')->primary();
             $table->foreignId('user_id')->nullable()->index();
             $table->string('full_name');
             $table->string('nic');
@@ -53,7 +52,7 @@ return new class extends Migration
         });
 
         Schema::create('lecturer', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->integer('id')->primary()->autoIncrement();
             $table->foreignId('user_id')->nullable()->index();
             $table->string('full_name');
             $table->string('nic');
