@@ -47,6 +47,7 @@ Route::middleware('auth', 'twofactor')->group(function () {
     Route::post('/timetable', [TimetableController::class, 'store'])->name('timetable.store');
 
     // Assignments
+    Route::resource('assignments', AssignmentController::class);
     Route::get('/assignments/create', [AssignmentController::class, 'create'])->name('assignments.create');
     Route::post('/assignments', [AssignmentController::class, 'store'])->name('assignments.store');
 

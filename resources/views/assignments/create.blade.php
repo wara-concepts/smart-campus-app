@@ -16,7 +16,11 @@
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700">Course:</label>
-                        <input type="text" name="course" class="w-full border rounded p-2" required>
+                        <select name="course_id" class="w-full border rounded p-2" required>
+                            @foreach($courses as $course)
+                                <option value="{{ $course->id }}">{{ $course->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700">Status:</label>

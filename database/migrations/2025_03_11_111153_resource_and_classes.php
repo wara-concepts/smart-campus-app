@@ -61,15 +61,15 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('events', function (Blueprint $table) {
-            $table->id()->primary();
-            $table->string('name');
-            $table->foreignId('user_id');
-            $table->dateTime('request_dateTime', precision: 0);
-            $table->dateTime('handover_dateTime', precision: 0);
-            $table->string('status');
-            $table->timestamps();
-        });
+        // Schema::create('events', function (Blueprint $table) {
+        //     $table->id()->primary();
+        //     $table->string('name');
+        //     $table->foreignId('user_id');
+        //     $table->dateTime('request_dateTime', precision: 0);
+        //     $table->dateTime('handover_dateTime', precision: 0);
+        //     $table->string('status');
+        //     $table->timestamps();
+        // });
     }
 
     /**
