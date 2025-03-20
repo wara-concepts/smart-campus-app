@@ -21,19 +21,27 @@ class TimetableController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'day' => 'required',
-            'time' => 'required',
-            'course_id' => 'required',
-            'instructor' => 'required',
-            'room' => 'required'
-        ]);
+{
+    $request->validate([
+        'course_id' => 'required|exists:courses,id',
+        'day' => 'required|string',
+        'start_time' => 'required',
+        'end_time' => 'required|after:start_time',
+        'instructor' => 'required|string',
+        'location' => 'required|string',
+    ]);
 
-        Timetable::create($request->all());
+    Timetable::create([
+        'course_id' => $request->course_id,
+        'day' => $request->day,
+        'start_time' => $request->start_time,
+        'end_time' => $request->end_time,
+        'instructor' => $request->instructor,
+        'location' => $request->location,
+    ]);
 
-        return redirect()->route('timetable')->with('success', 'Timetable entry added successfully.');
-    }
+    return redirect()->route('timetable')->with('success', 'Timetable entry added successfully.');
+}
 
     public function edit(Timetable $timetable)
     {
@@ -44,11 +52,13 @@ class TimetableController extends Controller
     public function update(Request $request, Timetable $timetable)
     {
         $request->validate([
-            'day' => 'required',
-            'time' => 'required',
-            'course_id' => 'required',
-            'instructor' => 'required',
-            'room' => 'required'
+            'course_id' => 'required|exists:courses,id',
+            'day' => 'required|string',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i|after:start_time',
+            'location' => 'nullable|string',
+            'instructor' => 'nullable|string',
+            'room' => 'nullable|string'
         ]);
 
         $timetable->update($request->all());

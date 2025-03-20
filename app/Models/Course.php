@@ -11,12 +11,12 @@ class Course extends Model
         'name', 
         'code', 
         'description',
-        'credits'
-    ];
+        'credits',
+    ]; 
 
-    // Example relationship (if courses belong to users)
-    public function user()
+    // Define the relationship with Material
+    public function materials()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(Material::class, 'course_id');
     }
 }
