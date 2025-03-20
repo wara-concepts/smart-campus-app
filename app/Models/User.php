@@ -20,10 +20,11 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'password',
-        'profile_picture', // Add this line
+        'usertype',
     ];
     
     /**
@@ -54,9 +55,29 @@ class User extends Authenticatable
      */
     public function getViews(): array {
         $views = [
-            ['view' => 'Dashboard', 'route' => 'home'],
+            ['view' => 'Dashboard', 'route' => 'auth.login'],
         ];
         return $views;
     }
+
+    // /**
+    //  * @return array
+    //  */
+
+    // public function getViewsFromDatabase(): array {
+    //     try {
+    //     $results = DB::table('master_views')->select('ViewName','ViewRoute')->get();
+    //     $views = $results -> map(function ($view) {return['view'=>$view->ViewName,'route'=>$view->ViewRoute];})->toarray();
+    //     return $views;
+    //     } catch (\Exception $e) {
+    //     return [];
+    //     }
+    // }
+
+    public function student()
+    {
+        return $this->hasOne(Student::class);
+    }
+
 
 }

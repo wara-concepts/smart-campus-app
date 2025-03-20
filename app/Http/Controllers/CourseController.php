@@ -85,20 +85,7 @@ class CourseController extends Controller
             'description' => $request->description,
         ]);
 
-        if ($request->hasFile('materials')) {
-            foreach ($request->file('materials') as $file) {
-                $filename = $file->hashName();
-                $path = $file->storeAs('materials', $filename, 'public');
-
-                Material::create([
-                    'course_id' => $course->id,
-                    'title' => $file->getClientOriginalName(),
-                    'file_path' => $path,
-                ]);
-            }
-        }
-
-        return redirect()->route('courses.show', $course->id)->with('success', 'Course updated successfully.');
+        return redirect()->route('courses.index')->with('success', 'Course updated successfully.');
     }
 
     public function destroy($id)
