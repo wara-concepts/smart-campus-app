@@ -14,22 +14,11 @@ class Course extends Model
         'code', 
         'description',
         'credits',
-        'materials' 
-    ];
-
-    protected $casts = [
-        'materials' => 'array',
-    ];
-
-    // // Define the relationship with LearningOutcome
-    // public function learningOutcomes()
-    // {
-    //     return $this->hasMany(LearningOutcome::class);
-    // }
+    ]; 
 
     // Define the relationship with Material
     public function materials()
     {
-        return $this->hasMany(Material::class);
+        return $this->hasMany(Material::class, 'course_id');
     }
 }

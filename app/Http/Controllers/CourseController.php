@@ -3,26 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Material;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CourseController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Course::query();
+        $courses = Course::when($request->search, function ($query, $search) {
+            $query->where('name', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+        })->paginate(5);
 
-        if ($request->has('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%')
-                  ->orWhere('description', 'like', '%' . $request->search . '%');
-        }
-
-        $courses = $query->paginate(5);
         return view('courses', compact('courses'));
     }
 
     public function show($id)
     {
-        $course = Course::findOrFail($id);
+        $course = Course::with('materials')->findOrFail($id);
         return view('courses.show', compact('course'));
     }
 
@@ -42,32 +41,30 @@ class CourseController extends Controller
             'materials.*' => 'file|mimes:pdf,doc,docx,ppt,pptx|max:2048',
         ]);
 
-        $materials = [];
-
-        if ($request->hasFile('materials')) {
-            foreach ($request->file('materials') as $file) {
-                $path = $file->store('materials', 'public');
-                $materials[] = [
-                    'title' => $file->getClientOriginalName(),
-                    'file_path' => $path,
-                ];
-            }
-        }
-
-        // Store as JSON in DB if needed
-        Course::create([
+        $course = Course::create([
             'name' => $request->name,
             'code' => $request->code,
             'credits' => $request->credits,
             'description' => $request->description,
-            'materials' => json_encode($materials), // Ensure JSON storage
         ]);
+
+        if ($request->hasFile('materials')) {
+            foreach ($request->file('materials') as $file) {
+                $path = $file->store('materials', 'public');
+                Material::create([
+                    'course_id' => $course->id,
+                    'title' => $file->getClientOriginalName(),
+                    'file_path' => $path,
+                ]);
+            }
+        }
 
         return redirect()->route('courses')->with('success', 'Course created successfully.');
     }
 
-    public function edit(Course $course)
+    public function edit($id)
     {
+        $course = Course::with('materials')->findOrFail($id);
         return view('courses.edit', compact('course'));
     }
 
@@ -88,23 +85,17 @@ class CourseController extends Controller
             'description' => $request->description,
         ]);
 
-        // Store uploaded files
         if ($request->hasFile('materials')) {
-            $existingMaterials = json_decode($course->materials, true) ?? [];
-
             foreach ($request->file('materials') as $file) {
-                $filename = $file->getClientOriginalName();
+                $filename = $file->hashName();
                 $path = $file->storeAs('materials', $filename, 'public');
 
-                $existingMaterials[] = [
-                    'title' => $filename,
+                Material::create([
+                    'course_id' => $course->id,
+                    'title' => $file->getClientOriginalName(),
                     'file_path' => $path,
-                ];
+                ]);
             }
-
-            $course->update([
-                'materials' => json_encode($existingMaterials),
-            ]);
         }
 
         return redirect()->route('courses.show', $course->id)->with('success', 'Course updated successfully.');
@@ -113,6 +104,13 @@ class CourseController extends Controller
     public function destroy($id)
     {
         $course = Course::findOrFail($id);
+        $materials = Material::where('course_id', $course->id)->get();
+
+        foreach ($materials as $material) {
+            Storage::disk('public')->delete($material->file_path);
+            $material->delete();
+        }
+
         $course->delete();
 
         return redirect()->route('courses')->with('success', 'Course deleted successfully.');

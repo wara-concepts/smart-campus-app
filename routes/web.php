@@ -11,6 +11,7 @@ use App\Http\Controllers\TimetableController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\MaterialController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,6 +25,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth', 'twofactor')->group(function () {
     // Single dashboard route that fetches assignments & events
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
 
     // Profile Routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -44,6 +46,8 @@ Route::middleware('auth', 'twofactor')->group(function () {
     // Courses
     Route::resource('courses', CourseController::class);
     Route::get('/courses/create', [CourseController::class, 'create'])->name('courses.create');
+    Route::put('/courses/{course}', [CourseController::class, 'update'])->name('courses.update');
+
 
     // Timetable
     Route::resource('timetable', TimetableController::class);
@@ -58,8 +62,11 @@ Route::middleware('auth', 'twofactor')->group(function () {
     // Events
     Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
     Route::post('/events', [EventController::class, 'store'])->name('events.store');
-});
 
+     // Materials (Added Route)
+     Route::delete('/materials/{id}', [MaterialController::class, 'destroy'])->name('materials.destroy');
+    });
+    
 // Academics Section
 Route::get('/courses', [CourseController::class, 'index'])->name('courses')->middleware('auth');
 Route::get('/timetable', [TimetableController::class, 'index'])->name('timetable')->middleware('auth');

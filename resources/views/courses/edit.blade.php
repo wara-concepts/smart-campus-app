@@ -35,23 +35,38 @@
                             <textarea name="description" id="description" class="form-control">{{ $course->description }}</textarea>
                         </div>
 
-                        <!-- Select Week (Dynamic) -->
+                        <!-- Display Existing Materials -->
+                        <div class="mb-3">
+                            <label class="block font-bold">Existing Materials</label>
+                            <ul>
+                                @foreach($course->materials ?? [] as $material)
+                                    <li>
+                                        <a href="{{ asset('storage/' . $material->file_path) }}" target="_blank">
+                                            {{ $material->title }}
+                                        </a>
+                                        <form action="{{ route('materials.destroy', ['id' => $material->id]) }}" method="POST" class="inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-red-500">[Delete]</button>
+                                        </form>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+
                         <div class="mb-3">
                             <label for="week_id" class="block font-bold">Select Week</label>
-                            <select name="week_id" id="week_id" class="form-control">
-                                <option value="">Select a Week</option>
-                                @for($i = 1; $i <= 14; $i++)
-                                    <option value="{{ $i }}" {{ $course->week_id == $i ? 'selected' : '' }}>
-                                        Week {{ $i }}
-                                    </option>
+                            <select id="week_id" name="week_id" class="form-control">
+                                <option value="">-- Select a Week --</option>
+                                @for ($i = 1; $i <= 12; $i++) <!-- Assuming 12 weeks -->
+                                    <option value="{{ $i }}">Week {{ $i }}</option>
                                 @endfor
                             </select>
                         </div>
 
-                        <!-- Learning Outcome Field (Updates Based on Selected Week) -->
                         <div class="mb-3">
                             <label for="learning_outcome" class="block font-bold">Learning Outcome</label>
-                            <input type="text" name="learning_outcome" id="learning_outcome" value="{{ $course->learning_outcome ?? '' }}" class="form-control">
+                            <input type="text" id="learning_outcome" name="learning_outcome" class="form-control" readonly>
                         </div>
 
                         <!-- Upload New Materials -->
@@ -73,13 +88,15 @@
         const weekSelect = document.getElementById("week_id");
         const learningOutcomeInput = document.getElementById("learning_outcome");
 
-        weekSelect.addEventListener("change", function () {
-            let selectedWeek = weekSelect.value;
-            if (selectedWeek) {
-                learningOutcomeInput.value = `Learning Outcome for Week ${selectedWeek}`;
-            } else {
-                learningOutcomeInput.value = "";
-            }
-        });
+        if (weekSelect && learningOutcomeInput) { // Ensure elements exist
+            weekSelect.addEventListener("change", function () {
+                let selectedWeek = weekSelect.value;
+                if (selectedWeek) {
+                    learningOutcomeInput.value = `Learning Outcome for Week ${selectedWeek}`;
+                } else {
+                    learningOutcomeInput.value = "";
+                }
+            });
+        }
     });
 </script>

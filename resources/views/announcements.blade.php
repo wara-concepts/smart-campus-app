@@ -17,7 +17,7 @@
                     <table class="min-w-full mt-4 border-collapse">
                         <thead>
                             <tr class="bg-blue-500 text-white">
-                                <th class="px-4 py-2">Notice No</th>
+                                <!-- <th class="px-4 py-2">Notice No</th> -->
                                 <th class="px-4 py-2">Title</th>
                                 <th class="px-4 py-2">Category</th>
                                 <th class="px-4 py-2">Publish Date</th>
@@ -27,7 +27,7 @@
                         <tbody>
                             @foreach($announcements as $announcement)
                                 <tr class="border-t">
-                                    <td class="px-4 py-2">#{{ $announcement->id }}</td>
+                                    <!-- <td class="px-4 py-2">#{{ $announcement->id }}</td> -->
                                     <td class="px-4 py-2">{{ $announcement->title }}</td>
                                     <td class="px-4 py-2">{{ $announcement->category }}</td>
                                     <td class="px-4 py-2">{{ $announcement->publish_date }}</td>

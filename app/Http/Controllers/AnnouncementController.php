@@ -53,11 +53,22 @@ class AnnouncementController extends Controller
             'title' => 'required',
             'category' => 'required',
             'publish_date' => 'required|date',
-            'content' => 'required'
+            'content' => 'required',
+            'attachment' => 'nullable|file|mimes:pdf,doc,docx,png,jpg,jpeg|max:2048'
         ]);
 
         $announcement = Announcement::findOrFail($id);
-        $announcement->update($request->all());
+        $data = $request->all();
+
+        if ($request->hasFile('attachment')) {
+            if ($announcement->attachment) {
+                Storage::disk('public')->delete($announcement->attachment);
+            }
+            $filePath = $request->file('attachment')->store('announcements', 'public');
+            $data['attachment'] = $filePath;
+        }
+
+        $announcement->update($data);
 
         return redirect()->route('announcements')->with('success', 'Announcement updated successfully!');
     }
