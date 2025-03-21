@@ -38,5 +38,27 @@
                 {{ __('Log Out') }}
             </x-dropdown-link>
         </form>
+        <!--Add Admin Navigation Links Here -->
+        @if (Auth::user()->usertype == 'admin')
+            <x-dropdown-link :href="route('view.users')">
+                {{ __('User Management') }}
+            </x-dropdown-link>
+            <x-dropdown-link :href="route('view.students')">
+                {{ __('Student Management') }}
+            </x-dropdown-link>
+            <x-dropdown-link :href="route('view.lecturers')">
+                {{ __('Lecturer Management') }}
+            </x-dropdown-link>
+            <!--Add Lecturer Navigation Links Here -->
+        @elseif(Auth::user()->usertype == 'lecturer')
+            <x-dropdown-link :href="route('profile.edit')">
+                {{ __('Profile') }}
+            </x-dropdown-link>
+            <!--Add Student Navigation Links Here -->
+        @elseif(Auth::user()->usertype == 'student')
+            <x-dropdown-link :href="route('profile.edit')">
+                {{ __('Profile') }}
+            </x-dropdown-link>
+        @endif
     </x-slot>
 </x-dropdown>

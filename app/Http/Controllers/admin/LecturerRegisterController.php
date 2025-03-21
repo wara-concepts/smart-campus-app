@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Student;
 use App\Models\department;
+use App\Models\Lecturer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
@@ -29,8 +30,8 @@ class LecturerRegisterController extends Controller
             'email' => 'required|string|email|max:191|unique:users',
             'fullname' => 'required|string|max:191',
             'address' => 'required|string|max:191',
-            'nic' => 'required|string|max:12',   
-            'phone' => 'required|string|max:20',   
+            'nic' => 'required|string|max:12',
+            'phone' => 'required|string|max:20',
             'dob' => 'required|date',
             'department' => 'required|string|max:191',
         ]);
@@ -46,7 +47,7 @@ class LecturerRegisterController extends Controller
 
         // Extract the numeric part and increment
         if ($lastLecturer) {
-            $lastNumber = (int)substr($lastLecturer->id, -4);
+            $lastNumber = (int) substr($lastLecturer->id, -4);
             $newNumber = str_pad($lastNumber + 1, 4, '0', STR_PAD_LEFT);
         } else {
             $newNumber = "0001";
@@ -84,7 +85,7 @@ class LecturerRegisterController extends Controller
         event(new Registered($user));
 
         return redirect()->route('register.lecturer.form')->with('success', "Lecturer registered successfully! ID: {$lecturerID}");
-    
+
     }
 
 

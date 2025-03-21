@@ -93,6 +93,11 @@ Route::middleware(['auth', 'twofactor'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcements');
+    Route::get('announcements/{id}', [AnnouncementController::class, 'show'])->name('announcements.show');
+    Route::get('/announcements/download/{id}', [AnnouncementController::class, 'download'])->name('announcements.download');
+    Route::resource('announcements', AnnouncementController::class)->except(['index', 'show']);
+
+    // Courses
     Route::resource('courses', CourseController::class);
 
     Route::get('/courses/create', [CourseController::class, 'create'])->name('courses.create');

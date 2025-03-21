@@ -2,83 +2,102 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Course;
+use App\Models\Material;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CourseController extends Controller
 {
-    /**
-     * Display a listing of courses.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        $courses = Course::all(); // Fetch all courses from the database
+        $courses = Course::when($request->search, function ($query, $search) {
+            $query->where('name', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+        })->paginate(5);
+
         return view('courses', compact('courses'));
     }
 
-    /**
-     * Show the form for creating a new course.
-     */
-    public function create()
+    public function show($id)
     {
-        return view('courses.create'); // Return the create course form view
+        $course = Course::with('materials')->findOrFail($id);
+        return view('courses.show', compact('course'));
     }
 
-    /**
-     * Store a newly created course in the database.
-     */
+    public function create()
+    {
+        return view('courses.create');
+    }
+
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'name' => 'required',
+            'code' => 'required|unique:courses',
+            'credits' => 'required|integer',
+            'description' => 'nullable',
+            'materials' => 'nullable|array',
+            'materials.*' => 'file|mimes:pdf,doc,docx,ppt,pptx|max:2048',
         ]);
 
-        Course::create($request->all()); // Insert into database
+        $course = Course::create([
+            'name' => $request->name,
+            'code' => $request->code,
+            'credits' => $request->credits,
+            'description' => $request->description,
+        ]);
+
+        if ($request->hasFile('materials')) {
+            foreach ($request->file('materials') as $file) {
+                $path = $file->store('materials', 'public');
+                Material::create([
+                    'course_id' => $course->id,
+                    'title' => $file->getClientOriginalName(),
+                    'file_path' => $path,
+                ]);
+            }
+        }
 
         return redirect()->route('courses')->with('success', 'Course created successfully.');
     }
 
-    /**
-     * Display the specified course.
-     */
-    public function show($id)
-    {
-        $course = Course::findOrFail($id); // Fetch course by ID
-        return view('courses.show', compact('course'));
-    }
-
-    /**
-     * Show the form for editing the specified course.
-     */
     public function edit($id)
     {
-        $course = Course::findOrFail($id);
+        $course = Course::with('materials')->findOrFail($id);
         return view('courses.edit', compact('course'));
     }
 
-    /**
-     * Update the specified course in the database.
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request, Course $course)
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'code' => 'required|string|max:255',
+            'credits' => 'required|integer',
             'description' => 'nullable|string',
+            'materials.*' => 'file|mimes:pdf,doc,docx,ppt,pptx,jpg,png,jpeg|max:2048',
         ]);
 
-        $course = Course::findOrFail($id);
-        $course->update($request->all());
+        $course->update([
+            'name' => $request->name,
+            'code' => $request->code,
+            'credits' => $request->credits,
+            'description' => $request->description,
+        ]);
 
         return redirect()->route('courses.index')->with('success', 'Course updated successfully.');
     }
 
-    /**
-     * Remove the specified course from the database.
-     */
     public function destroy($id)
     {
         $course = Course::findOrFail($id);
+        $materials = Material::where('course_id', $course->id)->get();
+
+        foreach ($materials as $material) {
+            Storage::disk('public')->delete($material->file_path);
+            $material->delete();
+        }
+
         $course->delete();
 
         return redirect()->route('courses')->with('success', 'Course deleted successfully.');
