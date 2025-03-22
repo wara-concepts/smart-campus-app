@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,21 +13,25 @@
 
     <!-- Custom Styles -->
     <style>
-        html, body {
+        html,
+        body {
             height: 100%;
             margin: 0;
-            overflow: hidden; /* Prevents unwanted horizontal scrolling */
+            overflow: hidden;
+            /* Prevents unwanted horizontal scrolling */
         }
 
         .wrapper {
             display: flex;
             flex-direction: column;
-            height: 100vh; /* Ensure it takes full viewport height */
+            height: 100vh;
+            /* Ensure it takes full viewport height */
         }
 
         .content {
             flex-grow: 1;
-            overflow-y: auto; /* Enables vertical scrolling */
+            overflow-y: auto;
+            /* Enables vertical scrolling */
             padding: 20px;
         }
     </style>
@@ -34,6 +39,7 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+
 <body class="font-sans antialiased">
     <div class="wrapper">
         @include('layouts.navigation')
@@ -51,10 +57,26 @@
         <main class="content">
             {{ $slot }}
         </main>
-    </div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+        <div class="container">
+            <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-1 border-top">
+                <p class="col-md-4 mb-0 text-muted">© 2025, Smart Campus Management System</p>
+                <a href="/"
+                    class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+                    <svg class="bi me-2" width="40" height="32">
+                        <use xlink:href="#bootstrap"></use>
+                    </svg>
+                </a>
+                <ul class="nav col-md-4 justify-content-end">
+                    <li class="nav-item"><a href="/chatify" class="nav-link text-muted">Go to Smart Campus Chatroom</a>
+                    </li>
+                </ul>
+            </footer>
+        </div>
+        <!-- Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
+</div>
+
 </html>
