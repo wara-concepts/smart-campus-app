@@ -24,6 +24,11 @@
                             @csrf
 
                             <div class="mb-3">
+                                <label for="code" class="form-label">Course Code</label>
+                                <input type="text" id="code" name="code" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
                                 <label for="name" class="form-label">Course Name</label>
                                 <input type="text" id="name" name="name" class="form-control" required>
                             </div>

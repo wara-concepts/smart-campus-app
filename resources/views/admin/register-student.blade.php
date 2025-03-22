@@ -85,7 +85,7 @@
                             <select id="course" name="course" class="block mt-1 w-full" required>
                                 <option value="">-- Select a Course --</option>
                                 @foreach ($courses as $course)
-                                    <option value="{{ $course->id }}">{{ $course->course }}</option>
+                                    <option value="{{ $course->id }}">{{ $course->name }}</option>
                                 @endforeach
                             </select>
                             <x-input-error :messages="$errors->get('course')" class="mt-2" />
