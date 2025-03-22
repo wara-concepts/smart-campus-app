@@ -17,11 +17,21 @@ class TwoFactorController extends Controller
         $user->two_factor_code = $code;
         $user->save();
 
-        // Send email with the code
-        Mail::raw("Your two-factor code is $code", function ($message) use ($user) {
-            $message->to($user->email)->subject('Two-Factor Code');
-        });
+        // // Send email with the code
+        // Mail::raw("Your two-factor code is $code", function ($message) use ($user) {
+        //     $message->to($user->email)->subject('Two-Factor Code');
+        // });
 
+        try {
+            // Send email with the code
+            Mail::raw("Your two-factor code is $code", function ($message) use ($user) {
+                $message->to($user->email)->subject('Two-Factor Code');
+            });
+        } catch (\Exception $e) {
+            $errormessage = 'Failed to send the two-factor code. If issue persists, get from users table';
+        }
+
+        redirect()->route('two-factor.index')->withErrors(['email' => $errormessage]);
         return view('auth.two-factor');
     }
 

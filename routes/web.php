@@ -91,6 +91,7 @@ Route::middleware(['auth', 'twofactor'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('/profile', [ProfileController::class, 'updateProfilePicture'])->name('profile.update.picture');
 
     Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcements');
     Route::get('announcements/{id}', [AnnouncementController::class, 'show'])->name('announcements.show');
@@ -128,7 +129,7 @@ Route::middleware(['auth', 'twofactor', 'adminMiddleware'])->group(function () {
     Route::post('/admin/register-student', [StudentRegisterController::class, 'registerStudent'])->name('register.student');
     Route::get('/admin/register-lecturer', [LecturerRegisterController::class, 'showLecturerRegistrationForm'])->name('register.lecturer.form');
     Route::post('/admin/register-lecturer', [LecturerRegisterController::class, 'registerLecturer'])->name('register.lecturer');
-    
+
     Route::get('/admin/view-users', [adminController::class, 'viewusers'])->name('view.users');
     Route::get('/admin/{user}/edit', [adminController::class, 'edit'])->name('adminusers.edit');
     Route::put('/admin/{user}', [adminController::class, 'update'])->name('adminusers.update');
